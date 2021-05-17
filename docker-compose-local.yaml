@@ -1,0 +1,29 @@
+version: "3"
+services:
+  en-ner:
+    build:
+      context: model_app/
+      args:
+        language: en
+        model: en-model.pt
+        model_type: ner
+        env: local
+    volumes:
+    - ./models/ner:/Volumes/
+  de-ner:
+    build:
+      context: model_app/
+      args:
+        language: de
+        model: de-model.pt
+        model_type: ner
+        env: local
+    volumes:
+    - ./models/ner/:/Volumes/
+
+  pipeliner:
+    build:
+      context: pipeliner/
+    volumes:
+    - ./inputs:/Volumes/inputs/
+    - ./outputs:/Volumes/outputs/

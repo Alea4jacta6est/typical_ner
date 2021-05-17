@@ -1,0 +1,36 @@
+version: "3"
+services:
+  en-ner:
+    build:
+      context: model_app/
+      args:
+        language: en
+        model: en-model.pt
+        model_type: ner
+        env: GCP
+    volumes:
+    - ./models/ner:/Volumes/
+    - ./creds.json:/Volumes/creds.json
+    environment:
+      - GOOGLE_APPLICATION_CREDENTIALS=creds.json
+  de-ner:
+    build:
+      context: model_app/
+      args:
+        language: de
+        model: de-model.pt
+        model_type: ner
+        env: GCP
+    volumes:
+    - ./models/ner/:/Volumes/
+    - ./creds.json:/Volumes/creds.json
+    environment:
+      - GOOGLE_APPLICATION_CREDENTIALS=creds.json
+# example of service that sends inputs to different models
+  pipeliner:
+    build:
+      context: pipeliner/
+    volumes:
+    - ./models/ner/:/Volumes/
+    - ./inputs:/Volumes/inputs/
+    - ./outputs:/Volumes/outputs/
