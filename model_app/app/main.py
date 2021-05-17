@@ -1,4 +1,4 @@
-"""Core script that runs the app"""
+"""Core script that runs the container with a model"""
 import logging
 import os
 

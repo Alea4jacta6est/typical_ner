@@ -1,18 +1,19 @@
+"""Tokenization functions for different languages"""
 from flair.data import Token, segtok_tokenizer
 from nltk import RegexpTokenizer
-from segtok.segmenter import split_single, split_newline
+from razdel import sentenize, tokenize
+from segtok.segmenter import split_newline, split_single
 from segtok.tokenizer import split_contractions
-from razdel import tokenize, sentenize
 
 
 def zh_tokenizer(text: str) -> list:
     """
-
+    Tokenizes texts in Chinese
     Args:
-        text: str
+        text (str): input text
 
-    Returns: flair Tokens
-
+    Returns: 
+        flair Token objects
     """
     sentences = text.split("。")
     words, tokens = [], []
@@ -32,6 +33,14 @@ def zh_tokenizer(text: str) -> list:
 
 
 def fr_tokenizer(text: str) -> list:
+    """
+    Tokenizes texts in French
+    Args:
+        text (str): input text
+
+    Returns: 
+        flair Token objects
+    """
     tokens = []
     tokenizer = RegexpTokenizer(r"""\w'|\w’|\w`|\w\w+'\w+|[^\w\s]|\w+""")
     words = []
@@ -71,6 +80,14 @@ def fr_tokenizer(text: str) -> list:
 
 
 def ru_tokenizer(text: str) -> list:
+    """
+    Tokenizes texts in Russian
+    Args:
+        text (str): input text
+
+    Returns: 
+        flair Token objects
+    """
     all_sentences = []
     for paragraph in split_newline(text):
         sentences = [x.text for x in list(sentenize(paragraph))]
